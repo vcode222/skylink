@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>𝐅𝐀𝐋𝐂𝐎𝐍 𝐀𝐈𝐑𝐋𝐈𝐍𝐄𝐒</title>
+  <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+</head>
+<style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0%;
+      opacity: 1;
+      background-image: url(https://c4.wallpaperflare.com/wallpaper/143/819/681/airplane-passenger-airliner-flight-sea-lights-airport-evening-wallpaper-preview.jpg);
+      background-size: cover;
+    }
+    .container {
+      background-color: rgb(255, 153, 0);
+      border-radius: 5px;
+      box-shadow: rgb(0, 0, 0) 10px 20px 25px;
+      overflow: hidden;
+      max-width: 100%;
+      width: 500px;
+      margin-right: 48%;
+    }
+    .header {
+      border: bottom 1px solid #f0f0f0;
+      background: 1px rgb(255, 81, 0);
+      padding: 10px 40px;
+    }
+    .header h2 {
+      text-align: center;
+    }
+    .form {
+      padding: 30px 40px;
+    }
+    .form-control {
+      margin-bottom: 10px;
+      padding-bottom: 20px;
+      position: relative;
+    }
+    .form-control label {
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+    .form-control input {
+      border: 2px solid black;
+      border-radius: 4px;
+      display: block;
+      font-size: 18px;
+      padding: 10px;
+      width: 100%;
+    }
+    .form-control input:focus {
+      outline: none;
+      border-color: rgb(255, 0, 0);
+    }
+    .form button {
+      display: block;
+      font-size: 16px;
+      width: 100%;
+      margin-top: 20px;
+      padding: 10px;
+      border-radius: 4px;
+    }
+  </style>
+<body>
+<div class="container">
+  <div class="header">
+    <h2>𝙁𝘼𝙇𝘾𝙊𝙉 𝘼𝙄𝙍𝙇𝙄𝙉𝙀𝙎</h2>
+  </div>
+  <form class="form" id="form">
+    <div class="form-control">
+      <label>DEPARTURE</label>
+      <input type="text" placeholder="Chennai" id="departure" />
+      <i class="fas fa-check-circle"></i>
+      <i class="fas fa-exclamation-circle"></i>
+    </div>
+    <div class="form-control">
+      <label>DESTINATION</label>
+      <input type="text" placeholder="Mumbai" id="destination" />
+      <i class="fas fa-check-circle"></i>
+      <i class="fas fa-exclamation-circle"></i>
+    </div>
+    <div class="form-control">
+      <label>AGE</label>
+      <input type="number" placeholder="enter your age" id="age" />
+      <i class="fas fa-check-circle"></i>
+      <i class="fas fa-exclamation-circle"></i>
+    </div>
+    <div class="form-control">
+      <label>DEPARTURE DATE</label>
+      <input type="date" id="date" />
+      <i class="fas fa-check-circle"></i>
+      <i class="fas fa-exclamation-circle"></i>
+    </div>
+    <div class="form-control">
+      <label>NO OF TICKETS</label>
+      <input type="number" min="1" max="10" id="ticketscount" />
+      <i class="fas fa-check-circle"></i>
+      <i class="fas fa-exclamation-circle"></i>
+    </div>
+    <button>submit</button>
+  </form>
+</div>
+<script>
+  async function submit(e) {
+        e.preventDefault();
+
+        const departure = document.querySelector("#departure").value;
+        const destination = document.querySelector("#destination").value;
+        const age = document.querySelector("#age").value;
+        const date = document.querySelector("#date").value;
+        const ticketscount = document.querySelector("#ticketscount").value;
+        const username = window.location.pathname.split("/")[1];
+
+        const data = {username, departure, destination, age, date, ticketscount};
+
+        const res = await fetch(`/${username}/bookticket`, {
+            method: "POST",
+            body: JSON.stringify(data),
+        })
+
+        const text = await res.text();
+
+        if (text === "Booked") {
+          window.location = `/${username}/bookedtickets`;
+        } else {
+          alert("Ticket not booked. Try Again");
+        }
+    }
+
+    document.querySelector("form").addEventListener("submit", submit);
+</script>
+</body>
+</html>

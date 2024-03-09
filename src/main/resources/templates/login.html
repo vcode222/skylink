@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>𝐋𝐎𝐆𝐈𝐍 𝐏𝐀𝐆𝐄</title>
+</head>
+<style>
+    body {
+      background-image: url("http://cdn.wallpapersafari.com/90/18/v7o8fc.jpg");
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background-color: tomato;
+      border-radius: 20px;
+      overflow: hidden;
+      max-width: 100%;
+      padding: 4rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    h2 {
+      text-align: center;
+    }
+  </style>
+<body>
+<div class="container">
+  <div class="header">
+    <h2>𝙇𝙊𝙂𝙄𝙉</h2>
+  </div>
+  <form class="form" id="form">
+    <div class="form-control">
+      <label>USERNAME</label>
+      <input type="text" placeholder="enter your username" id="username" />
+    </div>
+    <div class="form-control">
+      <label>PASSWORD</label>
+      <input type="password" placeholder="enter your password" id="password" />
+    </div>
+    <button>login</button>
+  </form>
+</div>
+<script>
+  async function submit(e) {
+        e.preventDefault();
+
+        const username = document.querySelector("#username").value;
+        const password = document.querySelector("#password").value;
+
+        const data = {username, password}
+
+
+        const res = await fetch("/login", {
+            method: "POST",
+            body: JSON.stringify(data),
+        })
+
+        const text = await res.text();
+
+        if (text === "Success") {
+            window.location = `/${username}/bookticket`;
+        } else {
+            alert(text);
+        }
+    }
+
+    document.querySelector("form").addEventListener("submit", submit);
+</script>
+</body>
+</html>

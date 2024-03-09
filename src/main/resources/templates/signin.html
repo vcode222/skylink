@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>𝐒𝐈𝐆𝐍𝐈𝐍 𝐏𝐀𝐆𝐄</title>
+</head>
+<style>
+    body {
+      background-image: url("http://cdn.wallpapersafari.com/90/18/v7o8fc.jpg");
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background-color: tomato;
+      border-radius: 20px;
+      overflow: hidden;
+      max-width: 100%;
+      padding: 4rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    .redirect {
+        font-size: 1.2rem;
+        text-align: center;
+        padding: 2rem;
+    }
+  </style>
+<body>
+<div class="container">
+    <div class="header">
+        <h2>𝙎𝙄𝙂𝙉 𝙄𝙉</h2>
+    </div>
+    <form class="form" id="form">
+        <div class="form-control">
+            <label>NAME</label>
+            <input name="name" type="text" placeholder="enter your name" id="name" />
+        </div>
+
+        <div class="form-control">
+            <label>USERNAME</label>
+            <input name="username" type="text" placeholder="enter your username" id="username" />
+        </div>
+
+        <div class="form-control">
+            <label>EMAIL</label>
+            <input name="email" type="email" placeholder="enter your email" id="email" />
+        </div>
+
+        <div class="form-control">
+            <label>PHONE NO</label>
+            <input name="phoneNo" type="text" placeholder="enter your phone no" id="phoneno" />
+        </div>
+
+        <div class="form-control">
+            <label>NATIONALITY</label>
+            <input name="nationality" type="text" placeholder="enter your nationality" id="nation" />
+        </div>
+
+        <div class="form-control">
+            <label>PASSWORD</label>
+            <input name="password" type="password" placeholder="enter your password" id="password" />
+        </div>
+        <button>Sign In</button>
+    </form>
+</div>
+<div class="redirect">Have an account <a href="/login">login</a> instead</div>
+
+<script>
+    async function submit(e) {
+        e.preventDefault();
+
+        const name = document.querySelector("#name").value;
+        const username = document.querySelector("#username").value;
+        const email = document.querySelector("#email").value;
+        const phoneno = document.querySelector("#phoneno").value;
+        const nation = document.querySelector("#nation").value;
+        const password = document.querySelector("#password").value;
+
+        const data = {name, username, password, email, phoneno, nation, email}
+
+
+        const res = await fetch("/signin", {
+            method: "POST",
+            body: JSON.stringify(data),
+        })
+
+        const text = await res.text();
+
+        if (text === "Added") {
+            window.location = "/login";
+        } else {
+            alert(text);
+        }
+    }
+
+    document.querySelector("form").addEventListener("submit", submit);
+</script>
+</body>
+</html>
